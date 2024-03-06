@@ -1,0 +1,63 @@
+.deletWrapper {
+  background-color: var(--gray-900-a5);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteBox {
+  background-color: var(--gray-800);
+  width: 27rem;
+  padding: .5rem 3rem 2rem;
+  border-radius: 8px;
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteAlert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.deleteAlert strong {
+  font-size: 1.5rem;
+}
+
+.deleteAlert p {
+  font-size: 1rem;
+}
+
+.deletNavigation {
+  display: flex;
+  gap: .75rem;
+}
+
+.deletNavigation button {
+  background-color: transparent;
+  font-size: .875rem;
+  padding: .75rem 2rem;
+  border-radius: 8px;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.deletNavigation button+button {
+  background-color: var(--gray-600);
+  color: var(--red-500);
+}
+
+.deletNavigation button:hover {
+  background-color: var(--gray-900);
+}
