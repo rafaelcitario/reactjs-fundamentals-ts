@@ -1,5 +1,9 @@
 import styles from "./Avatar.module.css";
-export const Avatar = ({ src, hasBorder }) => {
+interface AvatarProps{
+  src: string,
+  hasBorder: boolean,
+}
+export const Avatar = ({ src, hasBorder }: AvatarProps) => {
   return (
     <img
       src={src}

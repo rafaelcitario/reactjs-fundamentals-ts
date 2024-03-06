@@ -3,40 +3,59 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import { Avatar } from "./Avatar";
 import { Comentary } from "./Comentary";
 import styles from "../components/Post.module.css";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 
-export const Post = (props) => {
-  const [commentaryList, setCommentaryList] = useState([]);
+
+interface Author{
+  name: string,
+  role: string,
+  avatarUrl: string,
+}
+
+interface Content{
+  paragraphs: string[],
+  links: string[],
+}
+
+interface postProps{
+  author: Author,
+  content: Content
+  publishedAt: Date,
+}
+
+
+export const Post = ({author, publishedAt, content}: postProps) => {
+  const [commentaryList, setCommentaryList] = useState<string[]>([]) ;
   const [commentaryContent, setCommentaryContent] = useState("");
 
   // Formating date and hours using date-fns
   const publishedDateFormatted = format(
-    props.publishedAt,
+    publishedAt,
     "dd 'de' LLL 'às' HH:mm",
     { locale: ptBR }
   );
 
   // formating the difference of publish time use date-fns to
   const distancePublishedDatetoNow = formatDistanceToNow(
-    props.publishedAt.toString(),
+    publishedAt.toString(),
     { locale: ptBR, includeSeconds: true }
   )
     .replace("cerca de", "há")
     .concat("  atrás");
 
-  function handleSubmitFormCommentary(event) {
+  function handleSubmitFormCommentary(event: FormEvent) {
     event.preventDefault();
-    const getContentComentary = event.target.commentArea.value;
-    setCommentaryList([getContentComentary, ...commentaryList]);
+    
+    setCommentaryList([...commentaryList, commentaryContent]);
     setCommentaryContent("");
   }
 
-  function handleChangeComentaryField(event) {
+  function handleChangeComentaryField(event: ChangeEvent<HTMLTextAreaElement>) {
     setCommentaryContent(event.target.value);
     event.target.setCustomValidity("");
   }
 
-  function deleteComment(comment) {
+  function deleteComment(comment: string){
     const commentListWithoutDeletedOne = commentaryList.filter(itemToRemove => {
       return itemToRemove !== comment;
     })
@@ -44,7 +63,7 @@ export const Post = (props) => {
     setCommentaryList(commentListWithoutDeletedOne);
   }
 
-  function handleValidateCommentField(event) {
+  function handleValidateCommentField(event: InvalidEvent<HTMLTextAreaElement>) {
     console.log(event.target.setCustomValidity('Por favor insira sua menssagem antes de públicar.'))
   }
 
@@ -54,25 +73,25 @@ export const Post = (props) => {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar hasBorder src={props.author.avatarUrl} />
+          <Avatar hasBorder src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>{props.author.name}</strong>
-            <span>{props.author.role}</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
         <time
           title={publishedDateFormatted}
-          dateTime={props.publishedAt.toISOString()}
+          dateTime={publishedAt.toISOString()}
         >
           {distancePublishedDatetoNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        {props.content.paragraphs?.map((paragraph) => {
+        {content.paragraphs?.map((paragraph) => {
           return <p key={paragraph}>{paragraph}</p>;
         })}
-        {props.content.links?.map((links) => {
+        {content.links?.map((links) => {
           return <p key={links}><a href="">{links}</a></p>;
         })}
       </div>
@@ -96,8 +115,8 @@ export const Post = (props) => {
       </footer>
 
       <div className={styles.commentList}>
-        {commentaryList.map((content) => {
-          return <Comentary key={content} content={content} onDeleteComment={deleteComment} />;
+        {commentaryList.map((comment: string) => {
+          return <Comentary key={comment} content={comment} onDeleteComment={deleteComment} />;
         })}
       </div>
     </article>

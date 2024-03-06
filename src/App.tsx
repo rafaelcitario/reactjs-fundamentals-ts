@@ -13,9 +13,9 @@ const posts = [
   {
     id: 1,
     author: {
-      avatarUrl: "https://static.glamurama.uol.com.br/2022/06/jon-snow.jpg",
       name: "Jonn Snow",
       role: "Comandante da Guarda da Noite",
+      avatarUrl: "https://static.glamurama.uol.com.br/2022/06/jon-snow.jpg",
     },
     content: {
       paragraphs: [

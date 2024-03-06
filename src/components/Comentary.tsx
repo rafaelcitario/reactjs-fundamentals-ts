@@ -5,11 +5,17 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import styles from "./Comentary.module.css";
 import { useState } from "react";
 
-export const Comentary = ({ content, onDeleteComment }) => {
+interface ComentaryProps{
+  content: string,
+  onDeleteComment: (content: string) => void,
+}
+
+
+export const Comentary = ({ content, onDeleteComment }: ComentaryProps) => {
   const [clapInterator, setClapInterator] = useState(0);
 
   function handleDeleteComment() {
-    onDeleteComment(content);
+    return onDeleteComment(content);
   }
 
 
@@ -46,7 +52,10 @@ export const Comentary = ({ content, onDeleteComment }) => {
 
   return (
     <div className={styles.comment}>
-      <Avatar src="https://metro.co.uk/wp-content/uploads/2019/03/SEI_57275281.jpg?quality=90&strip=all&zoom=1&resize=180%2C170" />
+      <Avatar 
+      hasBorder={false}
+      src="https://metro.co.uk/wp-content/uploads/2019/03/SEI_57275281.jpg?quality=90&strip=all&zoom=1&resize=180%2C170" 
+      />
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>
